@@ -5,21 +5,21 @@
  */
 function onMessage(event) {
   const scriptProperties = PropertiesService.getScriptProperties();
-  const openaiApiKey = scriptProperties.getProperty('OPENAI_API_KEY');
-  const url = 'https://api.openai.com/v1/completions';
+  const openaiApiKey = scriptProperties.getProperty("OPENAI_API_KEY");
+  const url = "https://api.openai.com/v1/completions";
   const headers = {
-    'Authorization': 'Bearer ' + openaiApiKey,
-    'Content-type': 'application/json'
+    "Authorization": "Bearer " + openaiApiKey,
+    "Content-type": "application/json"
   };
   const options = {
-    'muteHttpExceptions' : true,
-    'headers': headers, 
-    'method': 'POST',
-    'payload': JSON.stringify({
-      'prompt': event.message.text,
+    "muteHttpExceptions" : true,
+    "headers": headers, 
+    "method": "POST",
+    "payload": JSON.stringify({
+      "prompt": event.message.text,
       "model": "text-davinci-003",
       "temperature": 0.7,
-      "max_tokens": 256,
+      "max_tokens": 512,
       "top_p": 1,
       "frequency_penalty": 0,
       "presence_penalty": 0 })
@@ -31,7 +31,7 @@ function onMessage(event) {
       console.info("message=", message );
       return { "text": message.trim() };
   } catch(e) {
-    console.error('error=', e, "\njson=", json);
+    console.error("error=", e, "\njson=", json);
   }
 }
 

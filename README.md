@@ -1,4 +1,4 @@
-# GoogleChatGTP
+# GoogleChatGPT
 ChatGPT in Google Chat/Spaces
 
 ## How to Build

@@ -14,7 +14,7 @@ function onMessage(event) {
     "api-key": azureOpenaiKey,
     "Content-type": "application/json"
   };
-  const regex = /^@\w+ /i;
+  const regex = /^@\w+\s+/i;
   const content = event.message.text.replace(regex, '');
   const options = {
     "headers": headers,

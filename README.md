@@ -1,5 +1,5 @@
-# GoogleChatGPT
-ChatGPT in Google Chat/Spaces
+# GoogleChatAI
+Generative AI in Google Chat/Spaces
 
 ## How to Build
 

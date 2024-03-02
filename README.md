@@ -19,6 +19,6 @@ Getting API key and set script Properties in GAS
 - Google Gemini
   - API_KEY
 
-## Sample
+## Example
 
-<img src="https://github.com/shigechika/GoogleChatAI/assets/235452/11761edf-eee9-4b46-a089-53d3047cd625" width="auto" height="auto" />
+<img src="https://github.com/shigechika/GoogleChatAI/assets/235452/86324ee8-e66e-4624-9e8b-100e4e587c63" width="50%" height="auto" /><img src="https://github.com/shigechika/GoogleChatAI/assets/235452/999e991c-37d4-4641-bb75-f859c1685f80" width="50%" height="auto" />

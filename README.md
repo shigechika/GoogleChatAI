@@ -5,11 +5,22 @@ Generative AI in Google Chat/Spaces
 
 - read first https://developers.google.com/chat/how-tos/apps-script
 
-  - replace onMessage()
+  - replace onMessage() function
 
-- getting OpenAI API Key from https://beta.openai.com/account/api-keys
+## How to Setup
 
-  - set OPENAI_API_KEY Property in GAS.
+Getting API key and set script Properties in GAS
+
+- Microsoft OpenAI
+
+  - AZURE_OPENAI_ENDPOINT
+  - AZURE_OPENAI_KEY
+  - AZURE_API_VERSION
+  - AZURE_DEPLOYMENT_NAME
+
+- Google Gemini
+
+  - API_KEY
 
 ## Sample
 

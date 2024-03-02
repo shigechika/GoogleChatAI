@@ -8,15 +8,15 @@ Generative AI with Google Chat/Spaces
 
 ## How to Setup
 
-Getting API key and set script Properties in GAS
+Getting API key(s) and set script Properties in GAS
 
-- Microsoft OpenAI
+- Microsoft Azure OpenAI with GoogleChatGPT.js
   - AZURE_OPENAI_ENDPOINT
   - AZURE_OPENAI_KEY
   - AZURE_API_VERSION
   - AZURE_DEPLOYMENT_NAME
 
-- Google Gemini
+- Google Gemini with GoogleChatGemini.js
   - API_KEY
 
 ## Example

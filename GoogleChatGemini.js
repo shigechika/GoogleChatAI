@@ -24,8 +24,9 @@ function onMessage(event) {
       const json = JSON.parse(response.getContentText());
       console.info("json=", json );
       const message = json["candidates"][0]["content"]["parts"][0]["text"];
-      console.info("message=", message );
-      return { "text": message.trim() };
+      const text = message.replace(/^\n\n/g, "\n").replace(/\*\*/g, "*").trim();
+      console.info("text=", text );
+      return { "text": text };
   } catch(e) {
     console.error("error=", e, "options=", options);
   }

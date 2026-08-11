@@ -18,8 +18,6 @@ function onMessage(event) {
     "payload": JSON.stringify( { "contents" : [ { "parts" : [ { "text" : text } ] } ] } )
   };
   try {
-      console.info("url=", url);
-      console.info("options=", options);
       const response = UrlFetchApp.fetch(url, options);
       const json = JSON.parse(response.getContentText());
       console.info("json=", json );

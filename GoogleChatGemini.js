@@ -26,7 +26,10 @@ function onMessage(event) {
       console.info("text=", text );
       return { "text": text };
   } catch(e) {
-    console.error("error=", e, "options=", options);
+    // Not logging e: UrlFetchApp embeds the full failing request URL
+    // (including this endpoint's ?key=... query param) in its exception
+    // message on a non-2xx response, so e itself carries the API key.
+    console.error("Gemini API request failed");
   }
 }
 

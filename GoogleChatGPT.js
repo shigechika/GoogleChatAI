@@ -23,7 +23,6 @@ function onMessage(event) {
   };
   try {
       console.info("url=", url);
-      console.info("options=", options);
       const response = UrlFetchApp.fetch(url, options);
       const json = JSON.parse(response.getContentText());
       console.info("json=", json );
@@ -31,7 +30,7 @@ function onMessage(event) {
       console.info("message=", message );
       return { "text": message.trim() };
   } catch(e) {
-    console.error("error=", e, "options=", options);
+    console.error("error=", e);
   }
 }
 

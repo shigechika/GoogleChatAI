@@ -31,7 +31,10 @@ function onMessage(event) {
       const response = UrlFetchApp.fetch(url, options);
       const code = response.getResponseCode();
       if (code < 200 || code >= 300) {
-        console.error("Azure OpenAI API request failed with status", code);
+        // The body carries the actual error reason and is key-safe to
+        // log — Azure error bodies do not echo the api-key header.
+        console.error("Azure OpenAI API request failed with status", code,
+            "body=", response.getContentText());
         return;
       }
       const json = JSON.parse(response.getContentText());
@@ -40,13 +43,13 @@ function onMessage(event) {
       console.info("message=", message );
       return { "text": message.trim() };
   } catch(e) {
-    // muteHttpExceptions covers HTTP-level failures (handled above via
-    // getResponseCode()); this catch is now only for network-level
-    // failures (DNS, timeout, connection refused). Kept generic rather
-    // than logging e directly, since the exact contents of a network
-    // exception's message aren't documented/guaranteed not to echo
-    // request details (e.g. the api-key header).
-    console.error("Azure OpenAI API request failed (network error)");
+    // Reached by network-level failures (DNS, timeout) AND by response-
+    // shape surprises on a 200 (e.g. finish_reason "content_filter"
+    // yields null message.content, making .trim() throw). e.name
+    // (TypeError vs a fetch error class) distinguishes the two without
+    // logging e's message, whose exact contents aren't documented/
+    // guaranteed not to echo request details (e.g. the api-key header).
+    console.error("Azure OpenAI API request failed:", e.name);
   }
 }
 

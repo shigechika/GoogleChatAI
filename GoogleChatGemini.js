@@ -10,7 +10,11 @@ function onMessage(event) {
   // an alternative to ?key=), not the URL: this removes the API key from
   // the request URL entirely, so UrlFetchApp's exception message on a
   // failing request can no longer carry it via the failing URL.
-  const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+  // gemini-3.7-flash: gemini-pro was retired upstream (every request 404s,
+  // confirmed against ai.google.dev/gemini-api/docs/models 2026-08) — the
+  // newest stable flash model minimizes the chance of another silent
+  // retirement breaking the bot.
+  const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent";
   const headers = {
     "Content-type": "application/json",
     "x-goog-api-key": apiKey
@@ -31,7 +35,12 @@ function onMessage(event) {
       const response = UrlFetchApp.fetch(url, options);
       const code = response.getResponseCode();
       if (code < 200 || code >= 300) {
-        console.error("Gemini API request failed with status", code);
+        // The body carries the actual error reason (INVALID_ARGUMENT
+        // detail, quota info, ...) and is key-safe to log — the key
+        // travels only in the request header, never echoed in Gemini
+        // error bodies.
+        console.error("Gemini API request failed with status", code,
+            "body=", response.getContentText());
         return;
       }
       const json = JSON.parse(response.getContentText());
@@ -41,13 +50,13 @@ function onMessage(event) {
       console.info("text=", text );
       return { "text": text };
   } catch(e) {
-    // muteHttpExceptions covers HTTP-level failures (handled above via
-    // getResponseCode()); this catch is now only for network-level
-    // failures (DNS, timeout, connection refused). Kept generic rather
-    // than logging e directly, since the exact contents of a network
-    // exception's message aren't documented/guaranteed not to echo
-    // request details.
-    console.error("Gemini API request failed (network error)");
+    // Reached by network-level failures (DNS, timeout) AND by response-
+    // shape surprises on a 200 (e.g. a safety-blocked prompt returns
+    // promptFeedback with no candidates, making the [0] access throw).
+    // e.name (TypeError vs a fetch error class) distinguishes the two
+    // without logging e's message, whose exact contents aren't
+    // documented/guaranteed not to echo request details.
+    console.error("Gemini API request failed:", e.name);
   }
 }
 
